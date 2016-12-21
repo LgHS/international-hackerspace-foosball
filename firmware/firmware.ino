@@ -13,6 +13,8 @@ void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(2, OUTPUT);
+
 }
 
 // the loop routine runs over and over again forever:
@@ -35,13 +37,16 @@ void loop() {
    * put switch to manually increment or decrement goals
    * electricite
    */
- -
+   
   while(1){
     sensorValue= analogRead(A0);  // Analog pin 0:
     Serial.println(sensorValue);  // Test print
     if(sensorValue <= (on+off)/2){
       //Serial.println("goal?");
       Serial.println("GOOOOOOOAL MOTHERFUCKER");
+      digitalWrite(2, HIGH);
+      delay(1000);
+      digitalWrite(2, LOW);
     }
     delay(10);
   }
