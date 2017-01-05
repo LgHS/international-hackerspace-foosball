@@ -1,4 +1,3 @@
-
 /*-----( Declare Pin Numbers )-----*/
 
 const int potentiometerPin = A0;   // Pot connected to Pin 2 will control strobe speed.
