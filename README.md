@@ -1,8 +1,10 @@
 # international-hackerspace-foosball
 Scoreboard app for our Foosball Table
 
+
 ## LED Serial
 
+```
 0	Static
 1	Blink
 2	Breath
@@ -62,3 +64,4 @@ s- 	 : decrease speed
 s <n> 	 : set speed to <n>
 
 c 0x007BFF 	 : set color to 0x007BFF
+```
