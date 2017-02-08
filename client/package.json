@@ -1,0 +1,13 @@
+{
+  "name": "ihf-frontend",
+  "version": "0.0.1",
+  "description": "Frontend for international hackerspace foosball",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "^2.2.1"
+  }
+}

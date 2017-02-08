@@ -87,3 +87,19 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+jspm_packages
+
+# Yarn Integrity file
+.yarn-integrity
+
+.DS_Store
