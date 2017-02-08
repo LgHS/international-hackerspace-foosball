@@ -1,7 +1,7 @@
 /*-----( Declare Pin Numbers )-----*/
 
-const int potentiometerPin = A0;   // Pot connected to Pin 2 will control strobe speed.
-const int ledPin = 13;  // Same as the small built-in LED, also use for separate bright LED
+const int potentiometerPin = A4;   // Pot connected to Pin 2 will control strobe speed.
+const int ledPin = 7;  // Same as the small built-in LED, also use for separate bright LED
 
 /*-----( Declare Constant Values )-----*/
 

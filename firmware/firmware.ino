@@ -23,9 +23,19 @@ boolean cmd_complete = false;  // whether the command string is complete
 
 int debounce = 3000;
 int treshold1  = 865;
-int treshold2  = 980;
+int treshold2  = 600;
 unsigned long sentTiming = -debounce;
 bool ball = false;
+
+// Strobe of shame
+const int strobePotentiometerPin = A4;   // Pot connected to Pin 2 will control strobe speed.
+const int strobeLedPin = 7;  // Same as the small built-in LED, also use for separate bright LED
+const int minDelay = 1;   // 1/1000 of a second
+const int maxDelay = 200;  //SO: That's 200/1000 right? 1/5 of a second. 5 flashes per second.
+const int onTime = 500;    //SO: 500/1000000 hmm.. reduce fraction: .5/1000  1/2 of 1/1000 of a second
+int potPosition = 0 ;  // Value from analogRead of the pot.  Values from 0..1023
+int strobeDelay = 0;  // How long between flashes? Changed by Pot position
+bool strobeIsOn = false;
 
 void setup() {
   Serial.begin(115200);
@@ -35,17 +45,20 @@ void setup() {
   ws2812fx.setColor(0x007BFF);
   ws2812fx.setMode(FX_MODE_STATIC);
   ws2812fx.start();
-  
+
   pinMode(GOAL_1_LED_PIN, OUTPUT);
   digitalWrite(GOAL_1_LED_PIN, HIGH);
   pinMode(GOAL_1_LDR_PIN, INPUT);
-  
+
   pinMode(GOAL_2_LED_PIN, OUTPUT);
   digitalWrite(GOAL_2_LED_PIN, HIGH);
   pinMode(GOAL_2_LDR_PIN, INPUT);
 
   printModes();
   printUsage();
+
+  // Strobe of shame
+  pinMode(strobeLedPin, OUTPUT); // Set up ledPins as an output.
 }
 
 void loop() {
@@ -61,21 +74,35 @@ void loop() {
     process_command();
   }
 
-  
+
   int readLDR = 0;
   readLDR = analogRead(GOAL_1_LDR_PIN);
+  // Serial.print("1: "); Serial.println(readLDR);
   ball = readLDR > treshold1;
   if( ball && millis() > sentTiming + debounce) {
     Serial.write("G1\n");
     sentTiming = millis();
   }
-  
+
   readLDR = analogRead(GOAL_2_LDR_PIN);
-  //Serial.println(readLDR);
+  //Serial.print("2: "); Serial.println(readLDR);
   ball = readLDR > treshold2;
   if( ball && millis() > sentTiming + debounce) {
     Serial.write("G2\n");
     sentTiming = millis();
+  }
+
+
+  // Strobe of shame
+  potPosition = analogRead(strobePotentiometerPin);  // Read the pot position
+
+  if(strobeIsOn) {
+    // convert the 0 to 1023 range we get from analogRead, into our strobe delay range of 1 to 200
+    strobeDelay = map(potPosition, 0, 1023, minDelay, maxDelay);
+    digitalWrite(strobeLedPin, HIGH); // Switch the ledPin to HIGH, turn it on!
+    delayMicroseconds(onTime); // Delay while on, for onTime.
+    digitalWrite(strobeLedPin, LOW); // Switch the ledPin to LOW, turn if off!
+    delay(strobeDelay); // Delay while off, for strobeDelay
   }
 }
 
