@@ -65,3 +65,23 @@ s <n> 	 : set speed to <n>
 
 c 0x007BFF 	 : set color to 0x007BFF
 ```
+
+
+## Frontend Client
+
+all the content of the frontend is the folder `client`.
+
+All the source code is supposed to be in the `src` and `dist` is the folder that can be exposed on the webserver.
+
+Tech stack:
+- Yarn
+- Webpack
+- React.js
+
+### Build frontend
+
+- install all the dependencies using [yarn](https://yarnpkg.com/en/) `yarn install`
+- `yarn run build`
+
+For the various tasks, `package.json scripts` are used
+Look at the `package.json` for more infos.
