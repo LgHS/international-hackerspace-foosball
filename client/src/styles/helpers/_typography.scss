@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
+html {
+  font-size: 62.5%;
+  font-family: 'VT323', monospace;
+  color: $green;
+}
+
+input, button {
+  font-family: 'VT323', monospace;
+}
+
+h1 {
+  text-transform: uppercase;
+  color: $white;
+  font-size: 5rem;
+}
