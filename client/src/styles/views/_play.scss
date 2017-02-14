@@ -1,0 +1,11 @@
+.play {
+  @include get-all-space;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.play__dash {
+  font-size: 40rem;
+}

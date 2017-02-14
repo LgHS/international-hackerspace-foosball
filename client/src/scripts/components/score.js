@@ -1,13 +1,10 @@
 import React from 'react';
 
-export default class Score extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>0</div>
-    )
-  }
+export default (props) => {
+  return (
+    <div className="score">
+      <div className="score__value">{ props.score }</div>
+      <div className="score__team">{ props.team }</div>
+    </div>
+  )
 }
