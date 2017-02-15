@@ -1,28 +1,29 @@
-import { combineReducers } from 'redux';
+const defaultGame = {
+  score: [0, 0],
+  team: [
+    ['Player1'],
+    ['Player2']
+  ],
+  winner: false
+};
 
-function score(state = [0, 0], action) {
-  if (action.type === 'ADD_SCORE') { 
-    const newState = [...state];   
-    newState[action.index] += 1;
+const game = (state = defaultGame, action) => {
+  let newState = {...state};
 
-    return newState;
+  if (action.type === 'ADD_SCORE') {
+    newState.score[action.index] += 1;
   }
 
   if (action.type === 'REMOVE_SCORE') {
-    const newState = [...state];
-    newState[action.index] -= 1;
-
-    return newState;
+    newState.score[action.index] -= 1;
+    newState.score[action.index] = Math.max(0, newState.score[action.index]);
   }
-  
-  return state;
-}
 
-function team(state = [['Player1'], ['Player2']], action) {
-  return state;
-}
+  newState.winner = newState.score[0] > 9;
+
+  return newState;
+};
 
 export default {
-  score,
-  team
+  game
 };

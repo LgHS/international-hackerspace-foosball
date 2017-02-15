@@ -9,6 +9,8 @@ import Score from '../components/score';
 import Button from '../components/button';
 
 const mapStateToProps = (state) => {
+  state = state.game;
+
   return {
     ...state,
     team: [
@@ -37,6 +39,9 @@ class Play extends React.Component {
   render() {
     return (
       <div className="play">
+        {this.props.winner &&
+          <p>game over!!</p>
+        }
         <div>
           <Score score={ this.props.score[0] } team={ this.props.team[0] } />
           <Button label="Add point" onClick={() => this.props.addScore(0)} />

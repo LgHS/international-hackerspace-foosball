@@ -1,23 +1,15 @@
- const defaultState = {
-  //  players: [[], []],
-   score: [0, 0],
-  //  screen: 'INTRO'
- };
+import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { routerReducer } from 'react-router-redux';
 
-import { createStore } from 'redux'
-import reducer from './reducers'
-import { addScore, removeScore } from './actions';
+import reducers from './reducers';
 
-let store = createStore(reducer);
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    routing: routerReducer
+  }),
+  composeWithDevTools()
+);
 
-console.log(store.getState());
-
-store.subscribe(() =>
-  console.log(store.getState())
-)
-console.log(addScore(0));
-
-store.dispatch(addScore(0));
-store.dispatch(addScore(0));
-store.dispatch(addScore(1));
-store.dispatch(removeScore(0));
+export default store;
