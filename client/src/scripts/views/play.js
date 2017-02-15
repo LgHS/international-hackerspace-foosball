@@ -8,14 +8,20 @@ import { addScore, removeScore } from '../actions';
 import Score from '../components/score';
 import Button from '../components/button';
 
+const getTeamName = (team) => {
+  return team.map(player => {
+    return player.name;
+  }).join(',');
+};
+
 const mapStateToProps = (state) => {
   state = state.game;
 
   return {
     ...state,
     team: [
-      state.team[0].join(', '),
-      state.team[1].join(', ')
+      getTeamName(state.team[0]),
+      getTeamName(state.team[1])
     ]
   };
 };

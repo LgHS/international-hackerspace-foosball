@@ -1,14 +1,21 @@
 const defaultGame = {
   score: [0, 0],
   team: [
-    ['Player1'],
-    ['Player2']
+    [],
+    []
   ],
   winner: false
 };
 
+const MAX_PLAYER_PER_TEAM = 2;
+
 const game = (state = defaultGame, action) => {
   let newState = {...state};
+
+  if (action.type === 'SET_PLAYER') {
+    const team = newState.team[action.index];
+    team.push(action.player);
+  }
 
   if (action.type === 'ADD_SCORE') {
     newState.score[action.index] += 1;

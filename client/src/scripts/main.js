@@ -8,7 +8,11 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import Intro from './views/intro';
+import Select from './views/select';
+import Create from './views/create';
 import Play from './views/play';
+import Winning from './views/winning';
+
 import store from './store';
 
 class App extends React.Component {
@@ -28,7 +32,10 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Intro} />
+        <Route path="select" component={Select} />
+        <Route path="create" component={Create} />
         <Route path="play" component={Play} />
+        <Route path="winning" component={Winning} />
       </Route>
     </Router>
   </Provider>,

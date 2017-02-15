@@ -15,11 +15,13 @@ export default class Intro extends React.Component {
     return (
       <div className="intro">
         <h1>Hackerspace foosball</h1>
-        <Link to="/play">
+        <Link to="/select">
           <Button label="Start Game"></Button>
         </Link>
 
-        <Button label="Create player"></Button>
+        <Link to="/create">
+          <Button label="Create player"></Button>
+        </Link>
       </div>
     )
   }

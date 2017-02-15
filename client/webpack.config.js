@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   entry: './src/scripts/main.js',
@@ -22,5 +22,8 @@ module.exports = {
         }
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true
   }
 };
