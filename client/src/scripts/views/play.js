@@ -48,7 +48,7 @@ class Play extends React.Component {
         {this.props.winner &&
           <p>game over!!</p>
         }
-        <div>
+        <div className="play__team">
           <Score score={ this.props.score[0] } team={ this.props.team[0] } />
           <Button label="Add point" onClick={() => this.props.addScore(0)} />
           <Button label="Remove point" onClick={() => this.props.removeScore(0)}/>
@@ -56,7 +56,7 @@ class Play extends React.Component {
         
         <div className="play__dash">&mdash;</div>
 
-        <div>
+        <div className="play__team">
           <Score score={ this.props.score[1] } team={ this.props.team[1]} />
           <Button label="Add point" onClick={() => this.props.addScore(1)} />
           <Button label="Remove point" onClick={() => this.props.removeScore(1) }/>

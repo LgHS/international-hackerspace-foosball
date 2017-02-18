@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { setPlayer } from '../actions';
+import { togglePlayer } from '../actions';
 import TeamList from '../components/teamList';
 import Button from '../components/button';
 
@@ -18,8 +18,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setPlayer: (player, index) => {
-      dispatch(setPlayer(player, index));
+    togglePlayer: (player, index) => {
+      dispatch(togglePlayer(player, index));
     }
   }
 };
@@ -36,24 +36,28 @@ class Select extends React.Component {
   render() {
     return (
       <div className="select">
-        <Link to="/">Back</Link>
-        Select players!
-
-        <TeamList
-          onSelect={(player) => this.props.setPlayer(player, 0)}
-          selected={this.props.game.team[0]}
-          />
+        <Link to="/" className="select__back">&laquo; back</Link>
         
-        <TeamList
-          onSelect={(player) => this.props.setPlayer(player, 1)}
-          selected={this.props.game.team[1]}
-          />
+        <div className="select__content">
+          <TeamList
+            onPlayerClick={(player) => this.props.togglePlayer(player, 0)}
+            selected={this.props.game.team[0]}
+            />
+
+          <div className="select__vs">VS</div>
+          
+          <TeamList
+            onPlayerClick={(player) => this.props.togglePlayer(player, 1)}
+            selected={this.props.game.team[1]}
+            />
+        </div>
 
         {this.teamReady &&
-          <Link to="/play">
+          <Link to="/play" className="select__play">
             <Button label="Play"></Button>
           </Link>
         }
+
       </div>
     )
   }

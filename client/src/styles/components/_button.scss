@@ -1,8 +1,11 @@
 button {
+  display: inline-block;
   background: $green;
   color: $black;
   padding: 1rem 3rem;
   border: 0;
   font-size: 3rem;
+  min-width: 30rem;
   text-transform: uppercase;
+  cursor: pointer;
 }

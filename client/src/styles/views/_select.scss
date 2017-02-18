@@ -1,3 +1,39 @@
 .select {
   @include get-all-space;
 }
+
+.select__content {
+  display: flex;
+  position: absolute;
+  top: 10vh;
+  bottom: 10vh;
+  align-items: center;
+  width: 100%;
+}
+
+.select .team-list {
+  flex-basis: 40%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.select__vs {
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.select .team-list:last-child {
+  text-align: right;
+
+  li {
+    padding: 1rem 0;
+    padding-right: 3rem;
+  }
+}
+
+.select__play {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}

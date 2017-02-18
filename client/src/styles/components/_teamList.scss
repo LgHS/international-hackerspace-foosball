@@ -1,7 +1,20 @@
 .team-list {
-  
+}
+
+.team-list__container {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.team-list li {
+  padding: 1rem 0;
+  padding-left: 3rem;
+  user-select: none;
+  cursor: pointer;
 }
 
 .team-list li.active {
-  background: red;
+  background: $green;
+  color: $black;
 }

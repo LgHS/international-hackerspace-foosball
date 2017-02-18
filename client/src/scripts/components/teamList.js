@@ -37,7 +37,7 @@ export default class TeamList extends React.Component {
       const className = this.isPlayerSelected(player) ? 'active' : '';
 
       return (<li key={player.name}
-          onClick={() => this.props.onSelect(player)}
+          onClick={() => this.props.onPlayerClick(player)}
           className={className}>
         {player.name}
       </li>
@@ -45,8 +45,8 @@ export default class TeamList extends React.Component {
     });
 
     return (
-      <div>
-        <ul className="team-list">
+      <div className="team-list">
+        <ul className="team-list__container">
           {listItems}
         </ul>
       </div>

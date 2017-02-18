@@ -14,7 +14,7 @@ export default class Intro extends React.Component {
   render() {
     return (
       <div className="intro">
-        <h1>Hackerspace foosball</h1>
+        <h1>Hackerspace<br />foosball</h1>
         <Link to="/select">
           <Button label="Start Game"></Button>
         </Link>

@@ -1,0 +1,50 @@
+/**
+ * Global settings
+ */
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+// Remove tap highlight on iOS
+* {
+  -webkit-tap-highlight-color: $transparent;
+}
+
+
+/**
+ * Media
+ */
+img {
+  height: auto;
+}
+
+
+/**
+ * Forms
+ */
+// Input field reset
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
