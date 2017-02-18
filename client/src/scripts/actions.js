@@ -12,22 +12,6 @@ export function removeScore(index) {
   }
 }
 
-// export function setPlayer(player, index) {
-//   return {
-//     type: 'SET_PLAYER',
-//     player,
-//     index
-//   }
-// }
-
-// export function removePlayer(player, index) {
-//   return {
-//     type: 'REMOVE_PLAYER',
-//     player,
-//     index
-//   }
-// }
-
 export function togglePlayer(player, index) {
   return {
     type: 'TOGGLE_PLAYER',
