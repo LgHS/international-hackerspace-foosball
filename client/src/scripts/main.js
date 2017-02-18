@@ -15,6 +15,8 @@ import Winning from './views/winning';
 
 import store from './store';
 
+import audio from './audio';
+
 class App extends React.Component {
   render() {
     return (
