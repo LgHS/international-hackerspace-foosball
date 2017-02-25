@@ -21,9 +21,13 @@ boolean cmd_complete = false;  // whether the command string is complete
 #define GOAL_2_LED_PIN 12
 #define GOAL_2_LDR_PIN A1
 
+int calibration();
+
 int debounce = 3000;
-int treshold1  = 865;
-int treshold2  = 600;
+int off1;
+int off2;
+int on1;
+int on2;
 unsigned long sentTiming = -debounce;
 bool ball = false;
 
@@ -39,23 +43,44 @@ bool strobeIsOn = false;
 
 void setup() {
   Serial.begin(115200);
+
+  // LED Stripe
   ws2812fx.init();
-  ws2812fx.setBrightness(30);
+  ws2812fx.setBrightness(50);
   ws2812fx.setSpeed(200);
-  ws2812fx.setColor(0x007BFF);
+  ws2812fx.setColor(0xFFFFFF);
   ws2812fx.setMode(FX_MODE_STATIC);
   ws2812fx.start();
 
+  ws2812fx.service();
+
+  printModes();
+  printUsage();
+
+
+  // Led and LSR
   pinMode(GOAL_1_LED_PIN, OUTPUT);
-  digitalWrite(GOAL_1_LED_PIN, HIGH);
   pinMode(GOAL_1_LDR_PIN, INPUT);
 
   pinMode(GOAL_2_LED_PIN, OUTPUT);
   digitalWrite(GOAL_2_LED_PIN, HIGH);
   pinMode(GOAL_2_LDR_PIN, INPUT);
 
-  printModes();
-  printUsage();
+  // Calibration
+  Serial.println("Start calibration of goal capture");
+  digitalWrite(GOAL_1_LED_PIN, LOW);
+  off1 = calibration(GOAL_1_LDR_PIN);
+  Serial.print("Calibration: goal 1 off: "); Serial.println(off1);
+  digitalWrite(GOAL_1_LED_PIN, HIGH);
+  on1 = calibration(GOAL_1_LDR_PIN);
+  Serial.print("Calibration: goal 1 on: "); Serial.println(on1);
+
+  digitalWrite(GOAL_2_LED_PIN, LOW);
+  off2 = calibration(GOAL_2_LDR_PIN);
+  Serial.print("Calibration: goal 2 off: "); Serial.println(off2);
+  digitalWrite(GOAL_2_LED_PIN, HIGH);
+  on2 = calibration(GOAL_2_LDR_PIN);
+  Serial.print("Calibration: goal 2 on: "); Serial.println(on2);
 
   // Strobe of shame
   pinMode(strobeLedPin, OUTPUT); // Set up ledPins as an output.
@@ -74,24 +99,8 @@ void loop() {
     process_command();
   }
 
-
-  int readLDR = 0;
-  readLDR = analogRead(GOAL_1_LDR_PIN);
-  // Serial.print("1: "); Serial.println(readLDR);
-  ball = readLDR > treshold1;
-  if( ball && millis() > sentTiming + debounce) {
-    Serial.write("G1\n");
-    sentTiming = millis();
-  }
-
-  readLDR = analogRead(GOAL_2_LDR_PIN);
-  //Serial.print("2: "); Serial.println(readLDR);
-  ball = readLDR > treshold2;
-  if( ball && millis() > sentTiming + debounce) {
-    Serial.write("G2\n");
-    sentTiming = millis();
-  }
-
+  // Goal capture
+  checkGoals();
 
   // Strobe of shame
   potPosition = analogRead(strobePotentiometerPin);  // Read the pot position
@@ -220,4 +229,39 @@ void serialEvent() {
       cmd += inChar;
     }
   }
+}
+
+void checkGoals() {
+    int readLDR = 0;
+    readLDR = analogRead(GOAL_1_LDR_PIN);
+    // Serial.print("1: "); Serial.println(readLDR);
+    ball = readLDR > (off1 + on1) / 2;
+    //Serial.print("goal 1: "); Serial.println(ball);
+    if( ball && millis() > sentTiming + debounce) {
+      Serial.write("G1\n");
+      sentTiming = millis();
+    }
+
+    readLDR = analogRead(GOAL_2_LDR_PIN);
+    //Serial.print("2: "); Serial.println(readLDR);
+    ball = readLDR > (off2 + on2) / 2;
+    //Serial.print("goal 2: "); Serial.println(ball);
+    if( ball && millis() > sentTiming + debounce) {
+      Serial.write("G2\n");
+      sentTiming = millis();
+    }
+}
+
+/**
+* Calibrate LDR for goal capture
+**/
+int calibration(int pin) {
+  double i = 0, sum = 0;
+  for(i = 0; i < 100; i++) {
+    sum += analogRead(pin);
+    delay(20);
+    Serial.print(".");
+  }
+  Serial.println(".");
+  return sum / i;
 }
